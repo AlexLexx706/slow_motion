@@ -14,5 +14,7 @@ setup(
             'slow_motion = slow_motion:main'],
     },
     package_data={
+        'slow_motion': [
+            'images/*.*']
     },
 )

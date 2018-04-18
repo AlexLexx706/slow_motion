@@ -32,3 +32,4 @@ dist
 src
 raspoznavatel.egg-info
 *.7z
+*.egg-info

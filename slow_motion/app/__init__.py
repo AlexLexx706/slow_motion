@@ -1,3 +1,4 @@
+import sys
 from gevent.wsgi import WSGIServer
 import flask
 import os
@@ -10,12 +11,16 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 @app.route("/")
 def hello():
-    global counter
-    return flask.render_template('hello.html', counter=counter)
+    return flask.render_template('hello.html')
 
 
 @app.route('/picture.jpg')
 def image():
+    if sys.platform == 'win32':
+        path = os.path.join(os.path.split(__file__)[0], "images/cat.jpg")
+        app.logger.debug(path)
+        return flask.send_from_directory(*os.path.split(path))
+
     return flask.send_from_directory(*os.path.split(settings.out_file))
 
 

@@ -1,4 +1,4 @@
 timeout = 1
-out_file = '/tmp/out.jpg'
-width = 640
-height = 640
+out_file = '/tmp/out.png'
+width = 320
+height = 240

@@ -1,14 +1,22 @@
 import subprocess
 import time
+from slow_motion import settings
+from slow_motion import app
 
-timeout = 1
-out_file = '/tmp/out.jpg'
-width = 640
-height = 640
+import threading
+
 cmd = 'raspistill -w %s -h %s -o %s -ex night -rot 180' % (
-    width, height, out_file)
+    settings.width,
+    settings.height,
+    settings.out_file)
 
-while 1:
-    res = subprocess.run(cmd.split())
-    print("res:%s" % (res, ))
-    time.sleep(timeout)
+
+def proc():
+    while 1:
+        res = subprocess.run(cmd.split())
+        print("res:%s" % (res, ))
+        time.sleep(settings.timeout)
+
+
+threading.Thread(target=proc).start()
+app.main()

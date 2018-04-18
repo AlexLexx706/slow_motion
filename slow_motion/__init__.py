@@ -18,6 +18,8 @@ def proc():
     while 1:
         res = subprocess.run(cmd.split())
         print("res:%s" % (res, ))
+        with open(settings.out_file, 'rb') as f:
+            settings.img_buffer = f.read()
         time.sleep(settings.timeout)
 
 

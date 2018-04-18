@@ -2,6 +2,7 @@ import sys
 from gevent.wsgi import WSGIServer
 import flask
 import os
+import io
 from slow_motion import settings
 
 
@@ -17,11 +18,16 @@ def hello():
 @app.route('/picture.jpg')
 def image():
     if sys.platform == 'win32':
-        path = os.path.join(os.path.split(__file__)[0], "images/cat.jpg")
-        app.logger.debug(path)
-        return flask.send_from_directory(*os.path.split(path))
-
-    return flask.send_from_directory(*os.path.split(settings.out_file))
+        strIO = io.BytesIO(settings.img_buffer)
+        return flask.send_file(
+            strIO,
+            attachment_filename="picture.jpg",
+            as_attachment=True)
+    strIO = io.BytesIO(settings.img_buffer)
+    return flask.send_file(
+        strIO,
+        attachment_filename="picture.png",
+        as_attachment=True)
 
 
 def main():

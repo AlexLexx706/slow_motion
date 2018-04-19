@@ -8,11 +8,15 @@ from slow_motion import settings
 
 app = flask.Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
+settings.req_count = 0
 
 
 @app.route("/")
 def hello():
-    return flask.render_template('hello.html')
+    try:
+        return flask.render_template('hello.html', count=settings.req_count)
+    finally:
+        settings.req_count += 1
 
 
 @app.route('/picture.jpg')
